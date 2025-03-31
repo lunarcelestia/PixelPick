@@ -4,6 +4,7 @@ WORKDIR /app
 
 # Устанавливаем необходимые зависимости для AOT-компиляции
 RUN apt-get update && apt-get install -y clang zlib1g-dev
+
 # Копируем файл проекта и восстанавливаем зависимости
 COPY PixelPick.csproj ./
 RUN dotnet restore
