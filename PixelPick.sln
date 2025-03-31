@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35825.156 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PixelPick", "PixelPick.csproj", "{9E86B5BD-A5AE-473F-965D-45C3517F4C03}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9E86B5BD-A5AE-473F-965D-45C3517F4C03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E86B5BD-A5AE-473F-965D-45C3517F4C03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E86B5BD-A5AE-473F-965D-45C3517F4C03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E86B5BD-A5AE-473F-965D-45C3517F4C03}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1DED1700-4F28-40F3-84F6-AC256D19DB32}
+	EndGlobalSection
+EndGlobal
