@@ -3,7 +3,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-env
 WORKDIR /app
 
 # Устанавливаем необходимые зависимости для AOT-компиляции
-`RUN apt-get update && apt-get install -y clang zlib1g-dev`: Эта строка устанавливает `clang` и библиотеку `zlib1g-dev`, необходимые для AOT-компиляции.  `apt-get` - это менеджер пакетов в Debian/Ubuntu.
+RUN apt-get update && apt-get install -y clang zlib1g-dev`: Эта строка устанавливает `clang` и библиотеку `zlib1g-dev`, необходимые для AOT-компиляции.  `apt-get` - это менеджер пакетов в Debian/Ubuntu.
 
 # Копируем файл проекта и восстанавливаем зависимости
 COPY PixelPick.csproj ./
