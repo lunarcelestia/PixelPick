@@ -28,8 +28,6 @@ namespace PixelPick
                 Console.WriteLine(((Exception)eventArgs.ExceptionObject).StackTrace);
                 Environment.Exit(1);
             };
-
-            // Загружаем переменные окружения
             apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
             telegramBotToken = Environment.GetEnvironmentVariable("TELEGRAM_BOT_TOKEN");
 
@@ -44,18 +42,13 @@ namespace PixelPick
             botClient = new TelegramBotClient(telegramBotToken);
             var bot = new PixelPickBot(botClient);
 
-            // Используем новое API для получения обновлений
             botClient.StartReceiving(
                 updateHandler: HandleUpdateAsync,
                 pollingErrorHandler: HandlePollingErrorAsync
             );
-
-            // Запуск метода для отправки ежедневных обновлений
             _ = bot.SendDailyUpdates();
 
             Console.WriteLine("Бот запущен!");
-
-            // Бесконечный цикл для Background Worker
             while (true)
             {
                 await Task.Delay(TimeSpan.FromMinutes(1));
@@ -333,4 +326,5 @@ namespace PixelPick
         }
     }
 }
+
 
