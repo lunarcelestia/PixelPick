@@ -22,35 +22,31 @@ namespace PixelPick
         private static readonly HttpClient httpClient = new HttpClient();
 
         static async Task Main(string[] args)
-        {
-            apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
-            telegramBotToken = Environment.GetEnvironmentVariable("TELEGRAM_BOT_TOKEN");
-            string botUrl = Environment.GetEnvironmentVariable("BOT_URL");
+{
+    apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
+    telegramBotToken = Environment.GetEnvironmentVariable("TELEGRAM_BOT_TOKEN");
+    
+    if (string.IsNullOrEmpty(telegramBotToken))
+    {
+        Console.WriteLine("ERROR: TELEGRAM_BOT_TOKEN not found!");
+        return;
+    }
 
-            Console.WriteLine("Бот запущен!");
-            if (string.IsNullOrEmpty(telegramBotToken))
-            {
-                Console.WriteLine("Необходимо задать токен Telegram Bot API в appsettings.json");
-                return;
-            }
-            var botClient = new TelegramBotClient(telegramBotToken);
-            string BOT_URL = Environment.GetEnvironmentVariable("BOT_URL");
-            if (string.IsNullOrEmpty(BOT_URL))
-            {
-                Console.WriteLine("Необходимо задать URL бота в переменной окружения BOT_URL");
-                return;
-            }
+    Console.WriteLine($"TELEGRAM_BOT_TOKEN: {telegramBotToken?.Substring(0, Math.Min(10, telegramBotToken.Length))}...");
 
-            KeepAliveService keepAliveService = new KeepAliveService(botUrl);
-            keepAliveService.Start();
+    botClient = new TelegramBotClient(telegramBotToken);
+    var bot = new PixelPickBot(botClient);
+    botClient.StartReceiving(Update, Error);
+    _ = bot.SendDailyUpdates();
 
-            botClient.StartReceiving(Update, Error);
-            await Task.Delay(-1);
-            Console.ReadLine();
+    Console.WriteLine("Бот запущен!");
 
-            keepAliveService.Stop();
 
-        }
+    while (true)
+    {
+        await Task.Delay(1000);
+    }
+}
 
         async static Task Update(ITelegramBotClient botClient, Update update, CancellationToken token)
         {
@@ -185,4 +181,5 @@ namespace PixelPick
         }
     }
 }
+
 
