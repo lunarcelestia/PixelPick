@@ -8,7 +8,7 @@
 
 ***
 
-<p align="justify">
+<p align="center">
 This project is part of my portfolio, but it provides detailed instructions on how to integrate AI using an API into a Telegram bot, as well as how to host the bot on the Render platform for free.
 </p>
 
