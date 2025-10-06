@@ -6,11 +6,7 @@ using Telegram.Bot;
 using Telegram.Bot.Exceptions;
 using Newtonsoft.Json;
 using Telegram.Bot.Types;
-using Telegram.Bot.Types.Enums;
 using System.IO;
-using Microsoft.Extensions.Configuration;
-using Microsoft.AspNetCore.DataProtection.KeyManagement;
-using DotNetEnv;
 
 namespace PixelPick
 {
@@ -337,3 +333,4 @@ namespace PixelPick
         }
     }
 }
+
