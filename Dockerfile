@@ -18,4 +18,5 @@ WORKDIR /app
 COPY --from=build-env /app/out .
 
 # Указываем точку входа для приложения
-ENTRYPOINT ["dotnet", "PixelPick.dll"
+CMD ["dotnet", "PixelPick.dll"]
+
