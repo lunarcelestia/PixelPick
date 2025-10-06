@@ -15,7 +15,7 @@ This project is part of my portfolio, but it provides detailed instructions on h
 <br/>
 
 <p align="center">
-  <img src="https://pin.it/i/D5htZ6wJX" alt="PixelPick Demo" width="600"/>
+  <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExeXFlaGNiODM4YjdwejNudzhzaDRrejl0bG00cnNuOXpxZ21pbWpoOCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/2un1t60QJoSK1oiPop/giphy.gif" alt="PixelPick Demo" width="600"/>
 </p>
 
 <br/>
