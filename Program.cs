@@ -23,9 +23,6 @@ namespace PixelPick
 
         static async Task Main(string[] args)
         {
-
-
-            // Получение ключей API из конфигурации
             apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
             telegramBotToken = Environment.GetEnvironmentVariable("TELEGRAM_BOT_TOKEN");
             string botUrl = Environment.GetEnvironmentVariable("BOT_URL");
@@ -36,10 +33,7 @@ namespace PixelPick
                 Console.WriteLine("Необходимо задать токен Telegram Bot API в appsettings.json");
                 return;
             }
-
             var botClient = new TelegramBotClient(telegramBotToken);
-
-            // Получаем URL бота из переменной окружения или из appsettings.json
             string BOT_URL = Environment.GetEnvironmentVariable("BOT_URL");
             if (string.IsNullOrEmpty(BOT_URL))
             {
@@ -47,14 +41,13 @@ namespace PixelPick
                 return;
             }
 
-            // Создаем и запускаем KeepAliveService
             KeepAliveService keepAliveService = new KeepAliveService(botUrl);
             keepAliveService.Start();
 
             botClient.StartReceiving(Update, Error);
-            Console.ReadLine(); // Чтобы бот не завершал работу
+            await Task.Delay(-1);
+            Console.ReadLine();
 
-            // Важно: Останавливаем KeepAliveService при завершении работы бота
             keepAliveService.Stop();
 
         }
@@ -73,27 +66,24 @@ namespace PixelPick
             {
                 if (message.Text.StartsWith("/start"))
                 {
-                    // Обработка команды /start
                     string welcomeMessage = "привет! я PixelPick, помогу найти компьютерную игру именно для тебя!\n" +
                         "────  ────\n" +
                                             "просто напиши мне критерии, которые для тебя важны в новой игре, и я попробую найти подходящие игры.";
                     await botClient.SendTextMessageAsync(message.Chat.Id, welcomeMessage, cancellationToken: token);
-                    return; // Выходим из метода, чтобы не обрабатывать команду как обычный текст
+                    return; 
                 }
                 else if (message.Text.StartsWith("/help"))
                 {
-                    // Обработка команды /help
                     string helpMessage = "я PixelPick, бот для поиска компьютерных игр\n" +
                                          "╰┈➤ты можешь запустить меня, использовав команду /start.\n" +
                                          "╰┈➤теперь, чтобы получить подборку игр, просто напиши мне критерии, которые для тебя важны в игре (например, 'игры, похожие на...', 'RPG с открытым миром').\n" +
                                          "╰┈➤я постараюсь найти подходящие игры, используя эти критерии.\n" +
                                          "чем более точно ты опишешь, во что бы ты хотел поиграть, тем с большей вероятностью я подберу для тебя то, что нужно♡";
                     await botClient.SendTextMessageAsync(message.Chat.Id, helpMessage, cancellationToken: token);
-                    return; // Выходим из метода, чтобы не обрабатывать команду как обычный текст
+                    return; 
                 }
                 else
                 {
-                    // Обработка обычного текста (критериев игры)
                     prompt = message.Text;
 
                     try
@@ -114,12 +104,12 @@ namespace PixelPick
 
         static async Task<string> GetOpenAICompletion(string prompt)
         {
-            string proxyApiKey = "sk-MuAF57ghwdMALYxY4E0kICX1G8UxzcRP"; //свой ключ ProxyAPI
-            string requestUrl = "https://api.proxyapi.ru/openai/v1/chat/completions";  // эндпоинт для Chat Completions
-            string model = "gpt-4-turbo-preview"; // версия gpt
+            string proxyApiKey = "sk-MuAF57ghwdMALYxY4E0kICX1G8UxzcRP"; 
+            string requestUrl = "https://api.proxyapi.ru/openai/v1/chat/completions"; 
+            string model = "gpt-4-turbo-preview"; 
 
             var httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {proxyApiKey}"); // заголовок авторизации
+            httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {proxyApiKey}"); 
 
             var requestBody = new
             {
@@ -138,12 +128,10 @@ namespace PixelPick
             try
             {
                 var response = await httpClient.PostAsync(requestUrl, content);
-                response.EnsureSuccessStatusCode(); // выбрасывает исключение при ошибке HTTP
+                response.EnsureSuccessStatusCode(); 
 
                 var responseString = await response.Content.ReadAsStringAsync();
                 dynamic responseObject = JsonConvert.DeserializeObject(responseString);
-
-                // проверяем, что choices не null и содержит хотя бы один элемент
                 if (responseObject.choices != null && responseObject.choices.Count > 0)
                 {
                     return responseObject.choices[0].message.content;
@@ -172,7 +160,7 @@ namespace PixelPick
             try
             {
                 HttpResponseMessage response = await httpClient.PostAsync(requestUrl, content);
-                response.EnsureSuccessStatusCode(); // Проверка на успешный код ответа
+                response.EnsureSuccessStatusCode(); 
 
                 string responseJson = await response.Content.ReadAsStringAsync();
                 dynamic responseObject = JsonConvert.DeserializeObject(responseJson);
@@ -193,7 +181,8 @@ namespace PixelPick
         private static Task Error(ITelegramBotClient arg1, Exception arg2, CancellationToken arg3)
         {
             Console.WriteLine($"Ошибка Telegram Bot API: {arg2.Message}");
-            return Task.CompletedTask; // Важно вернуть Task.CompletedTask, чтобы не упасть
+            return Task.CompletedTask; 
         }
     }
 }
+
